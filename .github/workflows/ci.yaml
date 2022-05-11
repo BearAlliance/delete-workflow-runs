@@ -1,0 +1,12 @@
+on: push
+jobs:
+  del_runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete workflow runs
+        uses: BearAlliance/delete-workflow-runs@edc48de72f91b61d2f3e632336c8c2d4dcb62db9
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 30
+          keep_minimum_runs: 6
