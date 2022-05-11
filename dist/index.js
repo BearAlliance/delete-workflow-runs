@@ -1,5 +1,7 @@
 async function run() {
   const core = require("@actions/core");
+  const github = require('@actions/github');
+
   try {
     // Fetch all the inputs
     const token = core.getInput('token');
@@ -13,8 +15,9 @@ async function run() {
     }
     const repo_owner = splitRepository[0];
     const repo_name = splitRepository[1];
-    const { Octokit } = require("@octokit/rest");
-    const octokit = new Octokit({ auth: token });
+
+    const octokit = github.getOctokit(token);
+
     const workflows = await octokit
       .paginate("GET /repos/:owner/:repo/actions/workflows", {
         owner: repo_owner,
